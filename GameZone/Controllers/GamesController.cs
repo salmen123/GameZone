@@ -40,7 +40,23 @@ namespace GameZone.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(CreateGameFormViewModel viewModel)
         {
-            return View();
+            if (!ModelState.IsValid)
+            {
+                viewModel.Categories = _context.Categories
+                    .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
+                    .OrderBy(c => c.Text)
+                    .ToList();
+                viewModel.Devices = _context.Devices
+                    .Select(d => new SelectListItem { Value = d.Id.ToString(), Text = d.Name })
+                    .OrderBy(d => d.Text)
+                    .ToList();
+                return View(viewModel);
+            }
+
+            // Save game to database
+            // Save cover to server
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
