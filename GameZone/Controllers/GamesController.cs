@@ -1,17 +1,18 @@
-﻿using GameZone.Data;
+﻿using GameZone.Services;
 using GameZone.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GameZone.Controllers
 {
     public class GamesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICategoriesService _categoriesService;
+        private readonly IDevicesService _devicesService;
 
-        public GamesController(ApplicationDbContext context)
+        public GamesController(ICategoriesService categoriesService, IDevicesService devicesService)
         {
-            _context = context;
+            _categoriesService = categoriesService;
+            _devicesService = devicesService;
         }
 
         public IActionResult Index()
@@ -24,14 +25,8 @@ namespace GameZone.Controllers
         {
             CreateGameFormViewModel viewModel = new()
             {
-                Categories = _context.Categories
-                    .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
-                    .OrderBy(c => c.Text)
-                    .ToList(),
-                Devices = _context.Devices
-                    .Select(d => new SelectListItem { Value = d.Id.ToString(), Text = d.Name })
-                    .OrderBy(d => d.Text)
-                    .ToList()
+                Categories = _categoriesService.GetSelectList(),
+                Devices = _devicesService.GetSelectList()
             };
             return View(viewModel);
         }
@@ -42,14 +37,8 @@ namespace GameZone.Controllers
         {
             if (!ModelState.IsValid)
             {
-                viewModel.Categories = _context.Categories
-                    .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
-                    .OrderBy(c => c.Text)
-                    .ToList();
-                viewModel.Devices = _context.Devices
-                    .Select(d => new SelectListItem { Value = d.Id.ToString(), Text = d.Name })
-                    .OrderBy(d => d.Text)
-                    .ToList();
+                viewModel.Categories = _categoriesService.GetSelectList();
+                viewModel.Devices = _devicesService.GetSelectList(); ;
                 return View(viewModel);
             }
 
