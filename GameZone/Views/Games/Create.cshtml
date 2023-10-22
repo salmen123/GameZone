@@ -1,5 +1,4 @@
-﻿@* @model GameZone.ViewModels.CreateGameFormViewModel *@
-@model CreateGameFormViewModel
+﻿@model CreateGameFormViewModel
 
 @{
     ViewData["Title"] = "Add Game";
@@ -10,7 +9,7 @@
     Add a new game
 </h5>
 
-<form asp-controller="Games">
+<form asp-controller="Games" enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">

@@ -35,5 +35,12 @@ namespace GameZone.Controllers
             };
             return View(viewModel);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(CreateGameFormViewModel viewModel)
+        {
+            return View();
+        }
     }
 }
