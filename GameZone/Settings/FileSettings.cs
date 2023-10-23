@@ -1,6 +1,4 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-
-namespace GameZone.Settings
+﻿namespace GameZone.Settings
 {
     public static class FileSettings
     {
