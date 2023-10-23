@@ -2,7 +2,7 @@
 
 namespace GameZone.Services
 {
-    public interface IGamesServices
+    public interface IGamesService
     {
         Task Create(CreateGameFormViewModel model);
     }
