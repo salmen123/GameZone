@@ -7,16 +7,16 @@ namespace GameZone.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IGamesService _gamesServices;
+        private readonly IGamesService _gamesService;
 
-        public HomeController(IGamesService gamesServices)
+        public HomeController(IGamesService gamesService)
         {
-            _gamesServices = gamesServices;
+            _gamesService = gamesService;
         }
 
         public IActionResult Index()
         {
-            var games = _gamesServices.GetAll();
+            var games = _gamesService.GetAll();
             return View(games);
         }
 
