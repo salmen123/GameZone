@@ -84,5 +84,24 @@ namespace GameZone.Controllers
 
             return View(viewModel);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditGameFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Categories = _categoriesService.GetSelectList();
+                model.Devices = _devicesService.GetSelectList();
+                return View(model);
+            }
+
+            var game = await _gamesService.Update(model);
+
+            if (game is null)
+                return BadRequest();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
